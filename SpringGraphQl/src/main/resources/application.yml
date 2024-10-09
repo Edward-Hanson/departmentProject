@@ -1,12 +1,11 @@
-server:
-  port: 8000
+spring:
+  application:
+  name: SpringGraphQl
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
+server:
+  port: 1000

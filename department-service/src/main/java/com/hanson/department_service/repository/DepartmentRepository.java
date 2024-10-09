@@ -1,27 +1,12 @@
 package com.hanson.department_service.repository;
 
 import com.hanson.department_service.model.Department;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 @Repository
-public class DepartmentRepository {
+public interface DepartmentRepository extends JpaRepository<Department, UUID> {
 
-    private List<Department> departments = new ArrayList<Department>();
-
-    public Department addDepartment(Department department) {
-        departments.add(department);
-        return department;
-    }
-
-    public Department findById(Long id) {
-        return departments.stream().filter(department->department.getId().equals(id)).findFirst()
-                .orElseThrow(null);
-    }
-
-    public List<Department> findAll() {
-        return departments;
-    }
 }

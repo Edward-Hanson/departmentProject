@@ -1,0 +1,71 @@
+"Creates Employee and Department"
+type Mutation{
+    "Create Employee Api"
+    createEmployee(input: CreateEmployeeInput): GenericResponse
+    "Create Department Api"
+    createDepartment(input: CreateDepartmentInput): GenericResponse
+}
+
+"Create Employee Request/input"
+input CreateEmployeeInput{
+    "Employee's department Id"
+    departmentId: String!
+    "Employee's name"
+    employeeName: String!
+    "Employee's Position held"
+    employeePosition: String!
+    "Employee's Age"
+    employeeAge: Int!
+}
+
+"Employee type/Object"
+type Employee{
+    "Employee Id"
+    id: String!
+    "Employee's department's Id"
+    departmentId: String!
+    "Employee's name"
+    employeeName: String!
+    "Employee's position"
+    employeePosition: String!
+    "Employee's Age"
+    employeeAge: Int!
+}
+
+"General Creation response for employee and department"
+type GenericResponse{
+    "Status code"
+    code: Int!
+    "message"
+    message: String!
+}
+
+"Query for employee(s) and department(s)"
+type Query{
+    "return all employees"
+    getAllEmployees: [Employee]
+    "trial test"
+    hello: String!
+    "Return a specific Employee given an Id"
+    getEmployee(id: String!): Employee
+    "Return a specific Department together with its Employees given an Id"
+    getDepartment(id: String!): Department
+}
+
+
+
+"Department type/Object"
+type Department{
+    "Department Id"
+    id: String!
+    "Department name"
+    name: String!
+    "List of employees"
+    employees: [Employee!]!
+}
+
+"Input/request type for creating department"
+input CreateDepartmentInput{
+    "Department name"
+    name: String!
+}

@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.2</version>
+		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.hanson</groupId>
-	<artifactId>employee-service</artifactId>
+	<artifactId>SpringGraphQl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>employee-service</name>
-	<description>Demo project for Spring Boot</description>
+	<name>SpringGraphQl</name>
+	<description>Microservice using graphQL</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -33,23 +33,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-graphql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.zipkin.reporter2</groupId>
-			<artifactId>zipkin-reporter-brave</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -67,13 +55,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webflux</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springframework.graphql</groupId>
+			<artifactId>spring-graphql-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -90,6 +79,44 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>io.github.deweyjose</groupId>
+				<artifactId>graphqlcodegen-maven-plugin</artifactId>
+				<version>1.61.5</version>
+				<executions>
+					<execution>
+						<id>dgs-codegen</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<schemaPaths>
+								<param>src/main/resources/graphql-client</param>
+							</schemaPaths>
+							<packageName>com.hanson.SpringGraphQl.codegen</packageName>
+							<addGeneratedAnnotation>true</addGeneratedAnnotation>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-dgs-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

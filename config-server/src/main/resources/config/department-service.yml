@@ -1,9 +1,5 @@
-spring:
-  application:
-    name: department-service
-
 server:
-  port: 8081
+  port: 8001
 
 eureka:
   client:
