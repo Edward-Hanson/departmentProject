@@ -28,16 +28,19 @@ public class ClientService {
             .build();
 
     private final RestClient departmentClient = RestClient.builder()
-            .baseUrl("http://localhost:8001/department").build();;
+            .baseUrl("http://localhost:8001/department").build();
+
+
+
 
     public void saveEmployee(EmployeeCreationInput input){
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(input);
-
         employeeClient.post()
                 .uri("")
                 .body(input)
                 .retrieve();
     }
+
 
     public List<EmployeeDto> getEmployees() throws IOException {
         JsonNode employees = employeeClient.get()
@@ -49,12 +52,14 @@ public class ClientService {
         });
     }
 
+
     public EmployeeDto getEmployeeById(String id) {
         return employeeClient.get()
                 .uri("/{id}",id)
                 .retrieve()
                 .body(EmployeeDto.class);
     }
+
 
     public DepartmentDto getDepartment(String id) {
         DepartmentDto department;
@@ -75,6 +80,7 @@ public class ClientService {
         return department;
     }
 
+
     @Async
     protected List<EmployeeDto> employeesPerDepartment(DepartmentResponseDto department) {
         try {
@@ -89,6 +95,7 @@ public class ClientService {
             throw new GenericGraphQLException(e.getMessage());
         }
     }
+
 
     public GenericResponse createDepartment(DepartmentCreationInput input) {
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(input);
