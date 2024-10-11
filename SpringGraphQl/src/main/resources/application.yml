@@ -9,3 +9,9 @@ eureka:
 
 server:
   port: 1000
+
+sentry:
+  dsn: ${SENTRY_DSN}
+  tracesSampleRate: 1.0
+  exception-resolver-order: -2147483647
+

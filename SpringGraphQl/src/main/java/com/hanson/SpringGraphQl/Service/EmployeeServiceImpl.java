@@ -7,6 +7,7 @@ import com.hanson.SpringGraphQl.Dto.EmployeeCreationInput;
 import com.hanson.SpringGraphQl.Dto.EmployeeDto;
 import com.hanson.SpringGraphQl.Dto.GenericResponse;
 import com.hanson.SpringGraphQl.Exception.GenericGraphQLException;
+import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (Exception e) {
             response.setMessage(e.getMessage());
             response.setCode(500);
+            Sentry.captureException(e);
         }
         return response;
     }
@@ -39,6 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             return clientService.getEmployees();
         } catch (Exception e) {
+            Sentry.captureException(e);
             throw new GenericGraphQLException(e.getMessage());
         }
     }
@@ -48,6 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             return clientService.getEmployeeById(id);
         } catch (Exception e) {
+            Sentry.captureException(e);
             throw new GenericGraphQLException("Can not fetch employ: " + e.getMessage());
         }
     }
